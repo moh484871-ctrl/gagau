@@ -194,6 +194,13 @@
   .cta-card.alt{border-top-color:var(--olive);}
   .cta-card.tekaful-card{border-top-color:var(--gold);}
   .cta-card.tekaful-card .ic{color:#7A5A12;}
+  .cta-card.soon-card{border-top-color:#8a8265;}
+  .cta-card.soon-card .ic{color:#8a8265;}
+  .cta-card.soon-card{opacity:.92;}
+  .soon-tag{
+    display:inline-block; font-size:.7rem; color:#8a8265; background:#f1e9d6;
+    border:1px solid #d9c9a3; padding:2px 10px; border-radius:12px; margin-top:8px;
+  }
   .cta-card:hover{transform:translateY(-6px); box-shadow:0 16px 34px rgba(0,0,0,.35);}
   .cta-card .ic{display:block; margin-bottom:12px; color:var(--clay);}
   .cta-card .ic svg{width:30px; height:30px;}
@@ -294,7 +301,21 @@
   }
 
   .about-body{color:#3a3222; font-size:.98rem;}
-  .about-body h3{color:var(--clay-dark); font-family:'Cairo',sans-serif; font-size:1.1rem; margin:16px 0 6px;}
+  .about-body h3{color:var(--clay-dark); font-family:'Cairo',sans-serif; font-weight:800; font-size:1.22rem; margin:22px 0 8px; border-right:4px solid var(--gold); padding-right:10px;}
+  .about-body .about-title{color:var(--clay-dark); font-family:'Cairo',sans-serif; font-weight:900; font-size:1.35rem; text-align:center; margin:4px 0 18px;}
+  .about-body p{margin:0 0 12px;}
+
+  .about-img-wrap{
+    width:96px; height:96px; aspect-ratio:1/1; border-radius:50%; overflow:hidden;
+    margin:6px auto 20px; background:#f1e9d6; position:relative;
+    box-shadow:0 0 0 3px #ffffff, 0 6px 16px rgba(0,0,0,.15);
+  }
+  .about-img{width:100%; height:100%; object-fit:cover; display:block;}
+  .about-img-placeholder{
+    display:none; flex-direction:column; align-items:center; justify-content:center; gap:4px;
+    width:100%; height:100%; color:#8a8265; font-family:'Cairo',sans-serif; font-size:.6rem;
+    text-align:center; padding:0 6px;
+  }
 
   .tekaful-img-wrap{
     width:120px; height:120px; aspect-ratio:1/1; border-radius:50%; overflow:hidden;
@@ -383,6 +404,14 @@
       <p>تعرّف على صندوق التكافل وكيف يساهم في دعم أفراد عائلة المغني بعضهم بعضًا.</p>
     </div>
   </div>
+  <div class="cta-row" style="max-width:420px;">
+    <div class="cta-card soon-card" style="text-align:center;" onclick="showToast('سيتم العمل على هذه الخاصية لاحقًا')">
+      <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 2v4M16 2v4M3 10h18"/><path d="M12 14v4M10 16h4"/></svg></span>
+      <h3>فعاليات العائلة</h3>
+      <p>سيتم تجهيز هذه الصفحة لاحقًا لعرض فعاليات ومناسبات عائلة المغني.</p>
+      <span class="soon-tag">قريبًا</span>
+    </div>
+  </div>
 </section>
 
 <!-- ================= LOGIN (تحديث بياناتي) ================= -->
@@ -427,6 +456,111 @@
 
     <button class="submit-btn" onclick="doLogin()">دخول</button>
   </div>
+</section>
+
+<!-- ================= تحديث البيانات ================= -->
+<section class="page" id="page-update">
+  <button class="back-link" onclick="goPage('home')">→ العودة للرئيسية</button>
+  <div class="card">
+    <h2>تحديث بياناتي</h2>
+    <p class="hint">هذه هي بياناتك المسجلة لدينا، يمكنك تعديل ما تريد ثم الضغط على «تحديث البيانات» في الأسفل</p>
+  </div>
+
+  <form id="updForm" onsubmit="return submitUpdateForm(event)">
+
+    <div class="card">
+      <h2>بيانات رب الأسرة</h2>
+      <div class="field">
+        <label>اسم رب الأسرة (رباعي) <span class="req">*</span></label>
+        <input type="text" id="u_headName" required>
+      </div>
+      <div class="row2">
+        <div class="field">
+          <label>رقم الهوية (9 أرقام)</label>
+          <input type="text" id="u_headId" inputmode="numeric" maxlength="9" disabled>
+        </div>
+        <div class="field">
+          <label>تاريخ الميلاد <span class="req">*</span></label>
+          <input type="date" id="u_headDob" required>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>الحالة الاجتماعية <span class="req">*</span></label>
+        <select id="u_socialStatus" onchange="onSocialChangeUpdate()" required>
+          <option value="">اختر...</option>
+          <option value="married">متزوج</option>
+          <option value="widowed">أرمل/ة</option>
+          <option value="divorced">مطلق/ة</option>
+          <option value="abandoned">مهجور/ة</option>
+          <option value="prisoner_wife">زوجة أسير</option>
+        </select>
+      </div>
+
+      <div class="sub-panel" id="u_spousePanel">
+        <div class="field">
+          <label>اسم الزوجة (رباعي) <span class="req">*</span></label>
+          <input type="text" id="u_spouseName">
+        </div>
+        <div class="field">
+          <label>رقم هويتها</label>
+          <input type="text" id="u_spouseId" inputmode="numeric" maxlength="9">
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>الفرع ومكان السكن</h2>
+      <div class="row2">
+        <div class="field">
+          <label>الفرع <span class="req">*</span></label>
+          <select id="u_branch" required>
+            <option value="">اختر الفرع...</option>
+            <option>المغني</option><option>الأنقر</option><option>البطنيجي</option>
+            <option>أبو عمرو</option><option>الشياح</option><option>محيسن</option>
+            <option>فرج</option><option>العكشية</option><option>الحاج سالم (داود)</option>
+            <option>أبو هين</option><option>قديح</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>مخيم الإقامة <span class="req">*</span></label>
+          <select id="u_camp" onchange="onCampChangeUpdate()" required>
+            <option value="">اختر المخيم...</option>
+            <option>المغني - السرايا</option>
+            <option>المغني - أصدقاء المريض (الصداقة)</option>
+            <option>المغني - مترو</option>
+            <option>مخيمات أخرى</option>
+          </select>
+        </div>
+      </div>
+      <div class="field" id="u_campOtherWrap" style="display:none;">
+        <label>يرجى تحديد مكان السكن بالتفصيل <span class="req">*</span></label>
+        <input type="text" id="u_campOther" placeholder="مثال: اسم المخيم/المنطقة والموقع بالتفصيل">
+        <div class="error-text" id="err-u_campOther">الرجاء كتابة مكان السكن بالتفصيل</div>
+      </div>
+      <div class="row2">
+        <div class="field">
+          <label>رقم الجوال <span class="req">*</span></label>
+          <input type="tel" id="u_phone1" required>
+        </div>
+        <div class="field">
+          <label>رقم جوال احتياطي</label>
+          <input type="tel" id="u_phone2">
+        </div>
+      </div>
+      <div class="field">
+        <label>عدد أفراد الأسرة (الأبناء) <span class="req">*</span></label>
+        <input type="number" id="u_childCount" min="0" max="20" value="0" oninput="renderChildrenUpdate()">
+        <div class="hint" style="margin-top:6px;">ستظهر خانات تسجيل كل ابن تلقائيًا حسب العدد المُدخل</div>
+      </div>
+      <div id="u_childrenWrap"></div>
+    </div>
+
+    <button type="submit" class="submit-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px;vertical-align:-4px;margin-left:6px;"><path d="M20 6 9 17l-5-5"/></svg>
+      تحديث البيانات
+    </button>
+  </form>
 </section>
 
 <!-- ================= صندوق التكافل العائلي ================= -->
@@ -494,13 +628,59 @@
   <div class="card">
     <button class="back-link" onclick="goPage('home')">→ العودة للرئيسية</button>
     <h2>عن العائلة</h2>
-    <div class="tatreez" style="margin:14px 0;"></div>
+
+    <!-- خانة الصورة الدائرية: ضع ملفًا باسم bas123456.jpg بجانب هذا الملف
+         (أو عدّل مسار src أدناه ليشير إلى مكان الصورة) -->
+    <div class="about-img-wrap">
+      <img src="bas123456.jpg" alt="عائلة المغني" class="about-img"
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+      <div class="about-img-placeholder">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:26px;height:26px;"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+        <span>ضع صورة باسم bas123456.jpg بجانب الملف لعرضها هنا</span>
+      </div>
+    </div>
+
     <div class="about-body">
-      <p>عائلة المغني عائلة ممتدة تضم عددًا من الفروع، تجمعها روابط النسب والانتماء المشترك. تأتي هذه المنصة كأداة لتنظيم بيانات الأسر وتسهيل التواصل بين أفراد العائلة والجهات المعنية بتقديم الدعم.</p>
-      <h3>الفروع</h3>
-      <p>المغني، الأنقر، البطنيجي، أبو عمرو، الشياح، محيسن، فرج، العكشية، الحاج سالم (داود)، أبو هين، قديح.</p>
-      <h3>هدف المنصة</h3>
-      <p>حصر بيانات الأسر بدقة، وتحديد الاحتياجات الخاصة والصحية، لضمان وصول الدعم لمستحقيه في الوقت المناسب.</p>
+      <p class="about-title">عائلة المغني… عائلة واحدة، كلمة واحدة، وراية واحدة</p>
+
+      <p>عائلة المغني، إحدى العائلات العريقة المنتمية إلى حي الشجاعية، عائلةٌ ضاربة الجذور، عُرفت على مرّ السنين بأصالتها وترابط أبنائها ووقوفها إلى جانب أهلها في السراء والضراء.</p>
+
+      <p>وتتكوّن عائلة المغني من أحد عشر فرعًا يجمعها أصل واحد ونسب واحد وروابط أخوة ومصاهرة، وهي:</p>
+
+      <p>المغني، الانقر، البطنيجي، محيسن، أبو عمرو، الشياح، أبو هين، فرج، قديح، الحاج سالم (داود)، والعكشية.</p>
+
+      <p>ورغم تعدد الفروع وتشعب البيوت، بقيت العائلة في جوهرها عائلة واحدة، يجمع أبناءها تاريخ مشترك، وذكريات مشتركة، ومواقف لا تُنسى.</p>
+
+      <h3>عائلة قدّمت الشهداء</h3>
+      <p>قدّمت عائلة المغني، على امتداد تاريخها، الكثير من الشهداء الذين ارتقوا في سبيل وطنهم وأرضهم وكرامتهم، وتركوا خلفهم أسماءً ستبقى حاضرة في ذاكرة العائلة وأجيالها القادمة.</p>
+      <p>إن فقدان الأحبة ليس أمرًا سهلًا، لكن عائلات الشهداء تعرف أن أبناءها تركوا إرثًا من التضحية والصبر والثبات، وأن أسماءهم ستظل جزءًا من تاريخ العائلة وذاكرتها.</p>
+
+      <h3>صمود في وجه الحرب</h3>
+      <p>وفي ظل الحرب القاسية التي شهدها قطاع غزة، كان أبناء عائلة المغني، كما هو حال أبناء شعبنا، أمام ظروف استثنائية من الخوف والنزوح والفقدان والدمار.</p>
+      <p>ومع ذلك، ظلّت العائلة متمسكة بأرضها وأهلها، وصمد أبناؤها أمام المحن، يتقاسمون الألم ويساند بعضهم بعضًا، ويقفون إلى جانب من يحتاج إلى الوقوف معه.</p>
+      <p>فالحروب تكشف معادن الناس، وفي أصعب الظروف يظهر معنى العائلة الحقيقي؛ أن يكون القريب سندًا لقريبه، وأن يشعر كل فرد أن له أهلًا يقفون إلى جانبه مهما اشتدت الظروف.</p>
+
+      <h3>كلمتنا واحدة ورايتنا واحدة</h3>
+      <p>إن قوة عائلة المغني لا تكمن في عدد فروعها فحسب، وإنما في قدرتها على جمع هذه الفروع تحت مظلة واحدة، والحفاظ على روابط المحبة والاحترام والتكافل بينها.</p>
+      <p>وقد يكون لكل فرع خصوصيته وبيوته وأبناؤه، لكننا جميعًا أبناء عائلة واحدة، وتجمعنا راية واحدة وتاريخ واحد ومصير واحد.</p>
+      <p>ومن هنا، فإن عائلة المغني ستسعى دائمًا إلى تعزيز وحدتها، وتقوية أواصر الأخوة بين جميع فروعها، والوقوف مع أبنائها في أوقات الشدة، وحماية النسيج العائلي من أي خلاف أو تفرقة.</p>
+      <p>نريد أن تبقى كلمتنا واحدة، وموقفنا واحدًا، ورايتنا واحدة.</p>
+      <p>فالاختلاف في الآراء لا ينبغي أن يفرّق أبناء العائلة، وتعدد الفروع لا يعني تعدد الانتماء؛ فنحن جميعًا امتداد لعائلة واحدة، وبيت واحد، وتاريخ واحد.</p>
+
+      <h3>إلى أبناء عائلة المغني</h3>
+      <p>إلى كل فرد من أبناء المغني والانقر والبطنيجي ومحيسن وأبو عمرو والشياح وأبو هين وفرج وقديح والحاج سالم (داود) والعكشية:</p>
+      <p>أنتم جميعًا جزء من هذه العائلة، وكل واحد منكم يحمل مسؤولية الحفاظ على مكانتها ووحدتها.</p>
+      <p>فلنحفظ أسماء شهدائنا، ولنحترم كبارنا، ولنرعى صغارنا، ولنقف مع بعضنا في المحن، ولنترك لأبنائنا وأحفادنا إرثًا نفتخر به؛ إرثًا عنوانه الوحدة والتكافل والمحبة والكرامة.</p>
+      <p>ستبقى عائلة المغني، بإذن الله، عائلةً واحدة رغم الظروف، قويةً بأبنائها، عزيزةً بتماسكها، وفيةً لشهدائها، ومتمسكةً بجذورها في حي الشجاعية.</p>
+
+      <p style="text-align:center;font-weight:700;color:var(--clay-dark);margin-top:20px;">
+        نختلف في الرأي، لكن لا نختلف في الانتماء.<br>
+        تتعدد الفروع، لكن الأصل واحد.<br>
+        تتعدد البيوت، لكن العائلة واحدة.<br>
+        وكلمتنا واحدة… ورايتنا واحدة.
+      </p>
+
+      <p style="text-align:center;font-weight:800;color:var(--gold);margin-top:10px;">عائلة المغني — 11 فرعًا، أصل واحد، قلب واحد، وعائلة واحدة.</p>
     </div>
   </div>
 </section>
@@ -575,7 +755,7 @@
         </div>
         <div class="field">
           <label>مخيم الإقامة <span class="req">*</span></label>
-          <select id="camp" required>
+          <select id="camp" onchange="onCampChange()" required>
             <option value="">اختر المخيم...</option>
             <option>المغني - السرايا</option>
             <option>المغني - أصدقاء المريض (الصداقة)</option>
@@ -583,6 +763,11 @@
             <option>مخيمات أخرى</option>
           </select>
         </div>
+      </div>
+      <div class="field" id="campOtherWrap" style="display:none;">
+        <label>يرجى تحديد مكان السكن بالتفصيل <span class="req">*</span></label>
+        <input type="text" id="campOther" placeholder="مثال: اسم المخيم/المنطقة والموقع بالتفصيل">
+        <div class="error-text" id="err-campOther">الرجاء كتابة مكان السكن بالتفصيل</div>
       </div>
       <div class="row2">
         <div class="field">
@@ -778,6 +963,18 @@ function onSocialChange(){
   refreshPersonLists();
 }
 
+/* ---------------- camp select -> "other camp" free text ---------------- */
+function onCampChange(){
+  const val=document.getElementById('camp').value;
+  const wrap=document.getElementById('campOtherWrap');
+  const show = val==='مخيمات أخرى';
+  wrap.style.display = show ? 'block':'none';
+  if(!show){
+    document.getElementById('campOther').value='';
+    document.getElementById('err-campOther').style.display='none';
+  }
+}
+
 /* ---------------- generic yes/no toggles ---------------- */
 function pickChoice(btn,target,val){
   document.querySelectorAll(`.choice-group[data-target="${target}"] .choice-btn`).forEach(b=>b.classList.remove('picked'));
@@ -850,6 +1047,119 @@ function renderMartyrs(){
         </div>
       </div>`);
   }
+}
+
+/* ---------------- UPDATE PAGE: social status -> spouse fields ---------------- */
+function onSocialChangeUpdate(){
+  const val=document.getElementById('u_socialStatus').value;
+  document.getElementById('u_spousePanel').classList.toggle('show', val==='married');
+}
+
+/* ---------------- UPDATE PAGE: camp select -> "other camp" free text ---------------- */
+function onCampChangeUpdate(){
+  const val=document.getElementById('u_camp').value;
+  const wrap=document.getElementById('u_campOtherWrap');
+  const show = val==='مخيمات أخرى';
+  wrap.style.display = show ? 'block':'none';
+  if(!show){
+    document.getElementById('u_campOther').value='';
+    document.getElementById('err-u_campOther').style.display='none';
+  }
+}
+
+/* ---------------- UPDATE PAGE: children dynamic fields ---------------- */
+function renderChildrenUpdate(prefill){
+  const n=parseInt(document.getElementById('u_childCount').value)||0;
+  const wrap=document.getElementById('u_childrenWrap');
+  wrap.innerHTML='';
+  for(let i=1;i<=n;i++){
+    wrap.insertAdjacentHTML('beforeend',`
+      <div class="person-block">
+        <h4>الابن رقم ${i}</h4>
+        <div class="field"><label>الاسم (رباعي)</label><input type="text" class="u_childName"></div>
+        <div class="row2">
+          <div class="field"><label>رقم الهوية</label><input type="text" class="u_childId" inputmode="numeric" maxlength="9"></div>
+          <div class="field"><label>تاريخ الميلاد</label><input type="date" class="u_childDob"></div>
+        </div>
+      </div>`);
+  }
+  if(prefill && Array.isArray(prefill)){
+    const nameEls=wrap.querySelectorAll('.u_childName');
+    const idEls=wrap.querySelectorAll('.u_childId');
+    const dobEls=wrap.querySelectorAll('.u_childDob');
+    prefill.forEach((c,i)=>{
+      if(nameEls[i]) nameEls[i].value=c.name||'';
+      if(idEls[i]) idEls[i].value=c.id||'';
+      if(dobEls[i]) dobEls[i].value=c.dob||'';
+    });
+  }
+}
+
+/* ---------------- UPDATE PAGE: populate form from a saved record ---------------- */
+let currentUpdateId=null;
+function populateUpdateForm(id, rec){
+  currentUpdateId=id;
+  document.getElementById('u_headName').value=rec.headName||'';
+  document.getElementById('u_headId').value=id;
+  document.getElementById('u_headDob').value=rec.headDob||'';
+  document.getElementById('u_socialStatus').value=rec.socialStatus||'';
+  document.getElementById('u_spouseName').value=rec.spouseName||'';
+  document.getElementById('u_spouseId').value=rec.spouseId||'';
+  onSocialChangeUpdate();
+  document.getElementById('u_branch').value=rec.branch||'';
+  document.getElementById('u_camp').value=rec.camp||'';
+  onCampChangeUpdate();
+  document.getElementById('u_campOther').value=rec.campOther||'';
+  document.getElementById('u_phone1').value=rec.phone1||'';
+  document.getElementById('u_phone2').value=rec.phone2||'';
+  const children=rec.children||[];
+  document.getElementById('u_childCount').value=children.length;
+  renderChildrenUpdate(children);
+}
+
+/* ---------------- UPDATE PAGE: submit ---------------- */
+function submitUpdateForm(e){
+  e.preventDefault();
+  if(!currentUpdateId){ showToast('حدث خطأ، الرجاء تسجيل الدخول من جديد'); return false; }
+  const families=getFamilies();
+  const rec=families[currentUpdateId];
+  if(!rec){ showToast('حدث خطأ، الرجاء تسجيل الدخول من جديد'); return false; }
+
+  const campVal=document.getElementById('u_camp').value;
+  const campOtherVal=document.getElementById('u_campOther').value.trim();
+  if(campVal==='مخيمات أخرى' && !campOtherVal){
+    document.getElementById('err-u_campOther').style.display='block';
+    showToast('الرجاء كتابة مكان السكن بالتفصيل');
+    return false;
+  }
+  document.getElementById('err-u_campOther').style.display='none';
+
+  const children=[];
+  document.querySelectorAll('#u_childrenWrap .person-block').forEach(block=>{
+    children.push({
+      name: block.querySelector('.u_childName')?.value.trim()||'',
+      id: block.querySelector('.u_childId')?.value.trim()||'',
+      dob: block.querySelector('.u_childDob')?.value||''
+    });
+  });
+
+  rec.headName=document.getElementById('u_headName').value;
+  rec.headDob=document.getElementById('u_headDob').value;
+  rec.socialStatus=document.getElementById('u_socialStatus').value;
+  rec.spouseName=document.getElementById('u_spouseName').value;
+  rec.spouseId=document.getElementById('u_spouseId').value;
+  rec.branch=document.getElementById('u_branch').value;
+  rec.camp=campVal;
+  rec.campOther=campVal==='مخيمات أخرى' ? campOtherVal : '';
+  rec.phone1=document.getElementById('u_phone1').value;
+  rec.phone2=document.getElementById('u_phone2').value;
+  rec.children=children;
+
+  families[currentUpdateId]=rec;
+  saveFamilies(families);
+  showToast('تم تحديث بياناتك بنجاح');
+  setTimeout(()=>goPage('home'),1500);
+  return false;
 }
 
 /* ---------------- build the "affected persons" checkbox lists ---------------- */
@@ -930,6 +1240,14 @@ function submitForm(e){
     return false;
   }
   document.getElementById('err-regPassword2').style.display='none';
+  const campVal=document.getElementById('camp').value;
+  const campOtherVal=document.getElementById('campOther').value.trim();
+  if(campVal==='مخيمات أخرى' && !campOtherVal){
+    document.getElementById('err-campOther').style.display='block';
+    showToast('الرجاء كتابة مكان السكن بالتفصيل');
+    return false;
+  }
+  document.getElementById('err-campOther').style.display='none';
   if(!document.getElementById('declareBox').checked){
     showToast('يجب الموافقة على الإقرار والتعهد قبل الإرسال');
     return false;
@@ -953,7 +1271,8 @@ function submitForm(e){
     spouseName:document.getElementById('spouseName')?.value||'',
     spouseId:document.getElementById('spouseId')?.value||'',
     branch:document.getElementById('branch').value,
-    camp:document.getElementById('camp').value,
+    camp:campVal,
+    campOther:campVal==='مخيمات أخرى' ? campOtherVal : '',
     phone1:document.getElementById('phone1').value,
     phone2:document.getElementById('phone2').value,
     children,
@@ -975,7 +1294,9 @@ function doLogin(){
   const rec=families[id];
   if(!rec){ showToast('رقم الهوية غير مسجل لدينا'); return; }
   if(rec.password!==pass){ showToast('كلمة السر غير صحيحة'); return; }
-  showToast('تم تسجيل الدخول بنجاح، سيتم فتح صفحة تعديل بياناتك قريبًا');
+  showToast('تم تسجيل الدخول بنجاح');
+  populateUpdateForm(id, rec);
+  goPage('update');
 }
 
 /* ---------------- forgot password: build security questions ---------------- */
