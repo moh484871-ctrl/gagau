@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>معًا نصمد، معًا ننتصر — تسجيل عائلة المغني</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#FAF6EE;
+    --ink-2:#F1E9D6;
+    --sand:#FFFFFF;
+    --sand-dim:#E4D9BF;
+    --clay:#9C3A2B;
+    --clay-dark:#7C2E22;
+    --olive:#9C3A2B;
+    --gold:#B98B2E;
+    --ivory:#2B2418;
+    --danger:#9C3A2B;
+    --ok:#3F6B4F;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:'Cairo',sans-serif;
+    color:var(--ivory);
+    line-height:1.7;
+    overflow-x:hidden;
+    position:relative;
+    min-height:100vh;
+  }
+  h1,h2,h3{font-family:'Cairo',sans-serif;font-weight:800;margin:0;}
+  ::selection{background:var(--gold);color:#fff;}
+
+  /* ---------- background: solid color + blurred background image ---------- */
+  /* لإضافة صورة الخلفية: ضع ملفًا باسم bas1234.jpg بمقاس 1500×1125 بكسل
+     بجانب هذا الملف (أو عدّل مسار url() أدناه ليشير إلى مكان الصورة) */
+  .bg-anim{
+    position:fixed; inset:0; z-index:-2;
+    background:var(--ink);
+    overflow:hidden;
+  }
+  .bg-anim::before{
+    content:"";
+    position:absolute;
+    inset:-40px; /* توسعة الحواف لتفادي ظهور حدود بيضاء بسبب التغبيش */
+    background-image:url('bas1234.jpg');
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    filter:blur(2px);
+    transform:scale(1.08);
+  }
+  .bg-anim::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:rgba(250,246,238,.55); /* طبقة تعتيم فاتحة فوق الصورة لضمان وضوح النصوص */
+  }
+
+  /* ---------- tatreez divider (signature element) ---------- */
+  .tatreez{
+    height:14px;
+    width:100%;
+    background:
+      repeating-linear-gradient(135deg, var(--gold) 0 6px, transparent 6px 12px) top/24px 7px repeat-x,
+      repeating-linear-gradient(45deg, var(--clay) 0 6px, transparent 6px 12px) bottom/24px 7px repeat-x;
+    opacity:.9;
+  }
+  .tatreez.on-sand{filter:none;}
+
+  /* ---------- topbar ---------- */
+  .topbar{
+    position:sticky; top:0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 20px;
+    background:rgba(250,246,238,.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid rgba(199,154,59,.25);
+  }
+  .burger{
+    background:none;border:none;cursor:pointer;
+    display:flex;flex-direction:column;gap:5px;padding:8px;
+  }
+  .burger span{display:block;width:26px;height:2px;background:var(--gold);border-radius:2px;}
+  .brandmini{font-family:'Cairo',sans-serif;font-weight:700;font-size:1.05rem;color:var(--ivory);}
+
+  .sidemenu{
+    position:fixed; inset:0 auto 0 0; z-index:80;
+    width:min(300px,84vw); height:100%;
+    background:var(--ink-2);
+    transform:translateX(-105%);
+    transition:transform .35s cubic-bezier(.4,0,.2,1);
+    padding:24px 20px; border-left:1px solid rgba(199,154,59,.25);
+    display:flex; flex-direction:column; gap:6px;
+  }
+  .sidemenu.open{transform:translateX(0);}
+  .sidemenu h3{color:var(--gold); font-size:1.3rem; margin-bottom:10px;}
+  .sidemenu button{
+    text-align:right; background:none; border:none; color:var(--ivory);
+    font-family:'Cairo',sans-serif; font-size:1rem; padding:14px 10px;
+    border-bottom:1px solid rgba(241,231,210,.08); cursor:pointer;
+  }
+  .sidemenu button:hover{color:var(--gold);}
+  .overlay{
+    position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:70;
+    opacity:0; pointer-events:none; transition:opacity .3s;
+  }
+  .overlay.show{opacity:1; pointer-events:auto;}
+
+  /* ---------- hero ---------- */
+  .hero{
+    padding:56px 20px 40px; text-align:center;
+    display:flex; flex-direction:column; align-items:center; gap:18px;
+  }
+  .logo-wrap{
+    position:relative; width:150px; height:150px;
+    display:flex; align-items:center; justify-content:center;
+    animation:logoFloat 5s ease-in-out infinite;
+    cursor:pointer;
+  }
+  @keyframes logoFloat{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-8px);}
+  }
+  .logo-glow{
+    position:absolute; inset:-10px; border-radius:50%;
+    background:radial-gradient(circle, rgba(199,154,59,.55), transparent 70%);
+    animation:glowPulse 3.2s ease-in-out infinite;
+  }
+  @keyframes glowPulse{
+    0%,100%{opacity:.5; transform:scale(.94);}
+    50%{opacity:.9; transform:scale(1.08);}
+  }
+  .logo-ring{
+    width:128px;height:128px;border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, #fbf5e6, var(--sand) 70%);
+    display:flex;align-items:center;justify-content:center;
+    position:relative; z-index:2;
+    box-shadow:0 0 0 3px #ffffff, 0 10px 30px rgba(0,0,0,.15);
+    transition:transform .3s ease, box-shadow .3s ease;
+  }
+  .logo-ring-inner{
+    position:absolute; inset:0; border-radius:50%; overflow:hidden;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .logo-wrap:hover .logo-ring{transform:scale(1.06); box-shadow:0 0 0 3px #ffffff, 0 14px 36px rgba(0,0,0,.22);}
+  .logo-ring svg{width:52px;height:52px;color:var(--clay); position:relative; z-index:2; transition:opacity .25s;}
+  .logo-ring .logo-img{
+    width:100%; height:100%; object-fit:cover; border-radius:50%;
+    position:relative; z-index:2;
+  }
+  .logo-ring .upload-hint{
+    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    background:rgba(22,33,29,.72); color:var(--gold); font-size:.72rem; font-weight:600;
+    opacity:0; transition:opacity .25s; text-align:center; padding:0 10px; z-index:3;
+  }
+  .logo-wrap:hover .upload-hint{opacity:1;}
+  .logo-ring .ring-deco{
+    position:absolute; inset:-16px;
+    border-radius:50%;
+    background:conic-gradient(from 0deg, var(--gold) 0 8deg, transparent 8deg 24deg);
+    -webkit-mask:radial-gradient(farthest-side, transparent calc(100% - 4px), #000 calc(100% - 4px));
+    mask:radial-gradient(farthest-side, transparent calc(100% - 4px), #000 calc(100% - 4px));
+    animation:ringSpin 10s linear infinite;
+  }
+  @keyframes ringSpin{
+    from{transform:rotate(0deg);}
+    to{transform:rotate(360deg);}
+  }
+  .motto{font-size:clamp(1.9rem,5vw,2.8rem); color:var(--ivory); letter-spacing:.5px; text-shadow:0 1px 3px rgba(255,255,255,.7), 0 0 18px rgba(255,255,255,.5);}
+  .motto span{color:#7A5A12;}
+  .subline{color:#241e14; font-size:1.02rem; max-width:520px; font-weight:600; text-shadow:0 1px 3px rgba(255,255,255,.8), 0 0 14px rgba(255,255,255,.6);}
+  .fam-label{
+    font-family:'Cairo',sans-serif; font-size:.85rem; letter-spacing:.4px;
+    color:#7A5A12; border:1px solid rgba(122,90,18,.55);
+    padding:5px 14px; border-radius:20px; background:rgba(255,255,255,.55);
+  }
+
+  .cta-row{
+    display:flex; gap:18px; padding:8px 20px 50px; max-width:820px; margin:0 auto;
+    flex-wrap:wrap; justify-content:center;
+  }
+  .cta-card{
+    flex:1 1 300px; max-width:360px; background:var(--sand); color:var(--ivory);
+    box-shadow:0 2px 14px rgba(0,0,0,.06);
+    border-radius:var(--radius); padding:26px 22px; cursor:pointer;
+    border-top:5px solid var(--clay);
+    transition:transform .25s ease, box-shadow .25s ease;
+    text-align:right;
+  }
+  .cta-card.alt{border-top-color:var(--olive);}
+  .cta-card.tekaful-card{border-top-color:var(--gold);}
+  .cta-card.tekaful-card .ic{color:#7A5A12;}
+  .cta-card:hover{transform:translateY(-6px); box-shadow:0 16px 34px rgba(0,0,0,.35);}
+  .cta-card .ic{display:block; margin-bottom:12px; color:var(--clay);}
+  .cta-card .ic svg{width:30px; height:30px;}
+  .cta-card.alt .ic{color:var(--olive);}
+  .cta-card h3{font-size:1.3rem; margin-bottom:6px; color:var(--ivory);}
+  .cta-card p{margin:0; font-size:.92rem; color:#4a4436;}
+
+  /* ---------- generic sections ---------- */
+  .page{display:none; max-width:900px; margin:0 auto; padding:30px 18px 80px;}
+  .page.active{display:block; animation:fadeIn .4s ease;}
+  @keyframes fadeIn{from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);}}
+
+  .card{
+    background:var(--sand); color:#241e14; border-radius:var(--radius);
+    padding:26px; margin-bottom:22px;
+  }
+  .card h2{color:var(--clay-dark); font-size:1.5rem; margin-bottom:4px;}
+  .card .hint{font-family:'Cairo',sans-serif; color:#6b6250; font-size:.85rem; margin-bottom:18px;}
+
+  .field{margin-bottom:16px;}
+  .field label{
+    display:block; font-family:'Cairo',sans-serif; font-weight:700; font-size:.92rem;
+    margin-bottom:6px; color:#2c2617;
+  }
+  .field .req{color:var(--clay);}
+  input[type=text], input[type=number], input[type=password], input[type=date], input[type=tel], select, textarea{
+    width:100%; padding:12px 14px; border-radius:10px; border:1.5px solid #d9c9a3;
+    background:#fffdf8; font-family:'Cairo',sans-serif; font-size:.98rem; color:#241e14;
+  }
+  input:focus, select:focus, textarea:focus{
+    outline:none; border-color:var(--clay); box-shadow:0 0 0 3px rgba(166,61,44,.15);
+  }
+  .row2{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  @media(max-width:560px){.row2{grid-template-columns:1fr;}}
+
+  .choice-group{display:flex; gap:10px; flex-wrap:wrap;}
+  .choice-btn{
+    border:1.5px solid #d9c9a3; background:#fffdf8; padding:9px 18px; border-radius:24px;
+    cursor:pointer; font-family:'Cairo',sans-serif; font-size:.9rem; color:#3a3222;
+  }
+  .choice-btn.picked{background:var(--clay); border-color:var(--clay); color:#fff;}
+
+  .sub-panel{
+    border-right:3px solid var(--gold); padding:14px 16px; margin-top:10px;
+    background:#fbf5e6; border-radius:0 10px 10px 0; display:none;
+  }
+  .sub-panel.show{display:block;}
+
+  .person-block{
+    border:1px dashed #cbb98c; border-radius:10px; padding:14px; margin-bottom:12px; background:#fbf5e6;
+  }
+  .person-block h4{font-family:'Cairo',sans-serif; font-size:.95rem; color:var(--clay-dark); margin-bottom:10px;}
+
+  .checkbox-list{display:flex; flex-wrap:wrap; gap:10px;}
+  .checkbox-list label{
+    display:flex; align-items:center; gap:6px; font-family:'Cairo',sans-serif; font-weight:400;
+    background:#fffdf8; border:1px solid #d9c9a3; padding:7px 12px; border-radius:20px; font-size:.88rem;
+    cursor:pointer;
+  }
+  .checkbox-list input{width:auto;}
+
+  .declare{
+    display:flex; align-items:flex-start; gap:10px; background:#fbf5e6; border:1px solid #d9c9a3;
+    border-radius:10px; padding:16px;
+  }
+  .declare input{width:20px; height:20px; margin-top:2px;}
+  .declare p{margin:0; font-size:.92rem;}
+  .declare b{color:var(--clay-dark);}
+
+  .submit-btn{
+    display:block; width:100%; padding:16px; border:none; border-radius:12px;
+    background:var(--ok); color:#fff; font-family:'Cairo',sans-serif; font-weight:700; font-size:1.05rem;
+    cursor:pointer; transition:filter .2s;
+  }
+  .submit-btn:hover{filter:brightness(1.08);}
+  .submit-btn:disabled{background:#8a8a7f; cursor:not-allowed;}
+
+  .error-text{color:var(--danger); font-family:'Cairo',sans-serif; font-size:.82rem; margin-top:4px; display:none;}
+
+  .simple-login{
+    background:var(--sand); color:#241e14; border-radius:var(--radius); padding:30px; max-width:420px; margin:40px auto;
+    text-align:center;
+  }
+  .simple-login h2{color:var(--clay-dark); margin-bottom:6px;}
+  .simple-login p{color:#6b6250; font-size:.9rem; margin-bottom:20px;}
+  .simple-login .field{text-align:right;}
+  .recovery-box{
+    background:#fbf5e6; border:1px solid #d9c9a3; border-radius:10px;
+    padding:16px; margin:16px 0; text-align:right;
+  }
+  .recovered-box{
+    background:#eef6f0; border:1px solid #bcdcc4; border-radius:10px;
+    padding:16px; margin-bottom:20px; text-align:right;
+  }
+  .back-link{
+    display:inline-block; margin-bottom:16px; color:var(--gold); font-family:'Cairo',sans-serif;
+    font-size:.9rem; cursor:pointer; background:none; border:none;
+  }
+
+  .about-body{color:#3a3222; font-size:.98rem;}
+  .about-body h3{color:var(--clay-dark); font-family:'Cairo',sans-serif; font-size:1.1rem; margin:16px 0 6px;}
+
+  .tekaful-img-wrap{
+    width:120px; height:120px; aspect-ratio:1/1; border-radius:50%; overflow:hidden;
+    margin:16px auto 22px; background:#f1e9d6; position:relative;
+    box-shadow:0 0 0 3px #ffffff, 0 6px 18px rgba(0,0,0,.15);
+  }
+  .tekaful-img{width:100%; height:100%; object-fit:cover; display:block;}
+  .tekaful-img-placeholder{
+    display:none; flex-direction:column; align-items:center; justify-content:center; gap:6px;
+    width:100%; height:100%; color:#8a8265; font-family:'Cairo',sans-serif; font-size:.68rem;
+    text-align:center; padding:0 10px;
+  }
+
+  .toast{
+    position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(20px);
+    background:var(--ok); color:#fff; padding:16px 24px; border-radius:12px; font-family:'Cairo',sans-serif;
+    box-shadow:0 10px 30px rgba(0,0,0,.35); opacity:0; pointer-events:none; transition:all .35s ease;
+    z-index:200; text-align:center; max-width:90vw;
+  }
+  .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+
+  .stepper{
+    display:flex; gap:6px; flex-wrap:wrap; justify-content:center; margin-bottom:26px;
+    font-family:'Cairo',sans-serif; font-size:.78rem;
+  }
+  .stepper span{
+    background:rgba(199,154,59,.15); color:var(--gold); padding:5px 12px; border-radius:20px;
+    border:1px solid rgba(199,154,59,.3);
+  }
+
+  footer{text-align:center; padding:26px; color:#8a8265; font-family:'Cairo',sans-serif; font-size:.8rem;}
+</style>
+</head>
+<body>
+
+<div class="bg-anim"></div>
+
+<div class="overlay" id="overlay"></div>
+<nav class="sidemenu" id="sidemenu">
+  <h3>القائمة</h3>
+  <button onclick="goPage('login')">تسجيل دخول الأفراد</button>
+  <button onclick="goPage('rep')">لوحة دخول المندوب</button>
+  <button onclick="goPage('admin')">لوحة دخول المسؤول</button>
+  <button onclick="goPage('about')">عن العائلة</button>
+</nav>
+
+<div class="topbar">
+  <button class="burger" id="burgerBtn" aria-label="القائمة"><span></span><span></span><span></span></button>
+  <div class="brandmini">عائلة المغني</div>
+</div>
+
+<!-- ================= HOME ================= -->
+<section class="page active" id="page-home">
+  <div class="hero">
+    <div class="fam-label">منصّة تسجيل أفراد عائلة المغني</div>
+    <div class="logo-wrap">
+      <div class="logo-glow"></div>
+      <div class="logo-ring">
+        <div class="ring-deco"></div>
+        <div class="logo-ring-inner">
+          <img src="bas123.jpg" alt="شعار عائلة المغني" class="logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="display:none;"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4z"/></svg>
+          <div class="upload-hint"></div>
+        </div>
+      </div>
+    </div>
+    <h1 class="motto">معًا <span>نصمد</span>، معًا <span>ننتصر</span></h1>
+    <p class="subline">هذا الموقع مخصص لتسجيل بيانات أفراد عائلة المغني وتحديثها، لتنظيم التواصل وتقديم الدعم اللازم لكل أسرة.</p>
+  </div>
+  <div class="cta-row">
+    <div class="cta-card alt" onclick="goPage('register')">
+      <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4l10.5-10.5a2.1 2.1 0 0 0-3-3L5 17v3z"/></svg></span>
+      <h3>تسجيل جديد</h3>
+      <p>أسجّل أسرتي لأول مرة وأدخل جميع بيانات أفرادها.</p>
+    </div>
+    <div class="cta-card" onclick="goPage('login')">
+      <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="4.5"/><path d="M10.9 12.1 19 4M17 6l2 2M14 9l2 2"/></svg></span>
+      <h3>تحديث بياناتي</h3>
+      <p>لدي حساب مسبق — أدخل رقم الهوية وكلمة السر لتعديل بيانات أسرتي.</p>
+    </div>
+  </div>
+  <div class="cta-row" style="max-width:420px;">
+    <div class="cta-card tekaful-card" onclick="goPage('tekaful')">
+      <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7.5-4.6-10-9.5C.5 7.8 3 4 7 4c2 0 3.6 1.1 5 3 1.4-1.9 3-3 5-3 4 0 6.5 3.8 5 7.5-2.5 4.9-10 9.5-10 9.5z"/></svg></span>
+      <h3>صندوق التكافل العائلي</h3>
+      <p>تعرّف على صندوق التكافل وكيف يساهم في دعم أفراد عائلة المغني بعضهم بعضًا.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= LOGIN (تحديث بياناتي) ================= -->
+<section class="page" id="page-login">
+  <div class="simple-login">
+    <button class="back-link" onclick="goPage('home')">→ العودة للرئيسية</button>
+    <h2>تحديث بياناتي</h2>
+    <p>أدخل رقم الهوية وكلمة السر الخاصة بك</p>
+
+    <div class="recovered-box" id="recoveredBox" style="display:none;">
+      <p style="margin:0 0 8px;font-weight:700;color:var(--clay-dark);">تم التحقق من هويتك بنجاح ✓</p>
+      <p style="margin:0 0 10px;font-size:.9rem;">كلمة سرّك الحالية هي: <b id="oldPasswordShow" style="font-size:1.2rem;letter-spacing:3px;color:var(--clay-dark);"></b></p>
+      <div class="field" style="text-align:right;">
+        <label>تعديل كلمة السر (4 أرقام)</label>
+        <input type="text" id="newPasswordInput" inputmode="numeric" maxlength="4" pattern="\d{4}">
+      </div>
+      <button type="button" class="submit-btn" style="margin-top:6px;" onclick="saveNewPassword()">حفظ كلمة السر الجديدة</button>
+    </div>
+
+    <div class="field">
+      <label>رقم الهوية (9 أرقام) <span class="req">*</span></label>
+      <input type="text" id="loginId" inputmode="numeric" maxlength="9" placeholder="000000000">
+    </div>
+    <div class="field">
+      <label>كلمة السر (4 أرقام) <span class="req">*</span></label>
+      <input type="password" id="loginPassword" inputmode="numeric" maxlength="4" placeholder="••••">
+      <button type="button" class="back-link" style="margin-top:8px;padding:0;font-size:.85rem;" onclick="startPasswordRecovery()">هل نسيت كلمة السر؟</button>
+    </div>
+
+    <div class="recovery-box" id="recoveryBox" style="display:none;">
+      <p class="hint" style="margin-bottom:14px;">أجب عن السؤالين التاليين المبنيين على بياناتك المسجلة سابقًا للتحقق من هويتك</p>
+      <div class="field">
+        <label id="rqLabel1"></label>
+        <input type="text" id="rqAnswer1">
+      </div>
+      <div class="field">
+        <label id="rqLabel2"></label>
+        <input type="text" id="rqAnswer2">
+      </div>
+      <button type="button" class="submit-btn" onclick="verifyRecovery()">تحقق من الإجابات</button>
+    </div>
+
+    <button class="submit-btn" onclick="doLogin()">دخول</button>
+  </div>
+</section>
+
+<!-- ================= صندوق التكافل العائلي ================= -->
+<section class="page" id="page-tekaful">
+  <div class="card">
+    <button class="back-link" onclick="goPage('home')">→ العودة للرئيسية</button>
+    <h2>صندوق التكافل العائلي</h2>
+    <!-- خانة صورة صندوق التكافل: ضع ملفًا باسم bas12345.jpg بجانب هذا الملف
+         (أو عدّل مسار src أدناه ليشير إلى مكان الصورة) -->
+    <div class="tekaful-img-wrap">
+      <img src="bas12345.jpg" alt="صندوق التكافل العائلي" class="tekaful-img"
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+      <div class="tekaful-img-placeholder">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:36px;height:36px;"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+        <span>ضع صورة باسم bas12345.jpg بجانب الملف لعرضها هنا</span>
+      </div>
+    </div>
+    <div class="about-body" style="white-space:pre-line;">صندوق التكافل العائلي لعائلة المغني
+
+إلى أهلنا وعائلتنا في عائلة المغني...
+في ظل الظروف الصعبة التي نعيشها في غزة، لم يعد التكافل بين أفراد العائلة مجرد فكرة جميلة، بل أصبح حاجة وواجبًا.
+فكرة صندوق التكافل بسيطة: يساهم كل فرد من أفراد العائلة بمبلغ متفق عليه، لتجتمع هذه المساهمات وتكون سندًا لمن يحتاج، وتساعد في مواجهة الظروف الطارئة وسد احتياجات أهلنا الأكثر حاجة.
+المبلغ الذي قد يبدو بسيطًا منك، عندما تجتمع عليه أيدي العائلة، يصبح قوة وسندًا حقيقيًا.
+اليوم قد تكون أنت من يمدّ يد العون، وغدًا قد تكون أنت من يحتاجها.
+فلنقف مع بعضنا، ولنثبت أن عائلة المغني ليست مجرد اسم يجمعنا، بل عائلة يسند بعضها بعضًا في الشدة قبل الرخاء.
+معًا نكون أقوى... ومعًا لا نترك أحدًا من أهلنا وحده.</div>
+    <div class="cta-row" style="padding:24px 0 4px;">
+      <div class="cta-card alt" style="text-align:center;" onclick="showToast('سيتم تفعيل خاصية المساهمة قريبًا')">
+        <h3>مساهمة</h3>
+        <p>سجّل رغبتك بالمساهمة في صندوق التكافل العائلي</p>
+      </div>
+      <div class="cta-card" style="text-align:center;" onclick="goPage('home')">
+        <h3>رجوع</h3>
+        <p>العودة إلى الصفحة الرئيسية</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= REP / ADMIN placeholders ================= -->
+<section class="page" id="page-rep">
+  <div class="simple-login">
+    <button class="back-link" onclick="goPage('home')">→ العودة للرئيسية</button>
+    <h2>لوحة دخول المندوب</h2>
+    <p>هذه اللوحة قيد الإنشاء وسيتم تفعيلها لاحقًا</p>
+    <div class="field"><label>اسم المستخدم</label><input type="text"></div>
+    <div class="field"><label>كلمة السر</label><input type="password"></div>
+    <button class="submit-btn" onclick="showToast('لوحة المندوب ستُبنى في مرحلة لاحقة')">دخول</button>
+  </div>
+</section>
+
+<section class="page" id="page-admin">
+  <div class="simple-login">
+    <button class="back-link" onclick="goPage('home')">→ العودة للرئيسية</button>
+    <h2>لوحة دخول المسؤول</h2>
+    <p>هذه اللوحة قيد الإنشاء وسيتم تفعيلها لاحقًا</p>
+    <div class="field"><label>اسم المستخدم</label><input type="text"></div>
+    <div class="field"><label>كلمة السر</label><input type="password"></div>
+    <button class="submit-btn" onclick="showToast('لوحة المسؤول ستُبنى في مرحلة لاحقة')">دخول</button>
+  </div>
+</section>
+
+<!-- ================= ABOUT ================= -->
+<section class="page" id="page-about">
+  <div class="card">
+    <button class="back-link" onclick="goPage('home')">→ العودة للرئيسية</button>
+    <h2>عن العائلة</h2>
+    <div class="tatreez" style="margin:14px 0;"></div>
+    <div class="about-body">
+      <p>عائلة المغني عائلة ممتدة تضم عددًا من الفروع، تجمعها روابط النسب والانتماء المشترك. تأتي هذه المنصة كأداة لتنظيم بيانات الأسر وتسهيل التواصل بين أفراد العائلة والجهات المعنية بتقديم الدعم.</p>
+      <h3>الفروع</h3>
+      <p>المغني، الأنقر، البطنيجي، أبو عمرو، الشياح، محيسن، فرج، العكشية، الحاج سالم (داود)، أبو هين، قديح.</p>
+      <h3>هدف المنصة</h3>
+      <p>حصر بيانات الأسر بدقة، وتحديد الاحتياجات الخاصة والصحية، لضمان وصول الدعم لمستحقيه في الوقت المناسب.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= REGISTER ================= -->
+<section class="page" id="page-register">
+  <button class="back-link" onclick="goPage('home')">→ العودة للرئيسية</button>
+  <div class="stepper">
+    <span>بيانات رب الأسرة</span><span>العنوان والسكن</span><span>الأبناء</span><span>الحمل والرضاعة</span><span>الصحة</span><span>الشهداء</span><span>الإقرار</span>
+  </div>
+
+  <form id="regForm" onsubmit="return submitForm(event)">
+
+    <!-- رب الأسرة -->
+    <div class="card">
+      <h2>بيانات رب الأسرة</h2>
+      <p class="hint">تُكتب الأسماء رباعية كما في الهوية</p>
+      <div class="field">
+        <label>اسم رب الأسرة (رباعي) <span class="req">*</span></label>
+        <input type="text" id="headName" required>
+      </div>
+      <div class="row2">
+        <div class="field">
+          <label>رقم الهوية (9 أرقام) <span class="req">*</span></label>
+          <input type="text" id="headId" inputmode="numeric" maxlength="9" pattern="\d{9}" required>
+          <div class="error-text" id="err-headId">رقم الهوية يجب أن يتكون من 9 أرقام بالضبط</div>
+          <div class="error-text" id="err-headIdDup">⚠ رقم الهوية هذا مسجل مسبقًا لدينا. إذا كنت قد سجّلت من قبل، الرجاء استخدام «تحديث بياناتي» بدلًا من التسجيل الجديد.</div>
+        </div>
+        <div class="field">
+          <label>تاريخ الميلاد <span class="req">*</span></label>
+          <input type="date" id="headDob" required>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>الحالة الاجتماعية <span class="req">*</span></label>
+        <select id="socialStatus" onchange="onSocialChange()" required>
+          <option value="">اختر...</option>
+          <option value="married">متزوج</option>
+          <option value="widowed">أرمل/ة</option>
+          <option value="divorced">مطلق/ة</option>
+          <option value="abandoned">مهجور/ة</option>
+          <option value="prisoner_wife">زوجة أسير</option>
+        </select>
+      </div>
+
+      <div class="sub-panel" id="spousePanel">
+        <div class="field">
+          <label>اسم الزوجة (رباعي) <span class="req">*</span></label>
+          <input type="text" id="spouseName">
+        </div>
+        <div class="field">
+          <label>رقم هويتها</label>
+          <input type="text" id="spouseId" inputmode="numeric" maxlength="9">
+        </div>
+      </div>
+    </div>
+
+    <!-- الفرع والسكن -->
+    <div class="card">
+      <h2>الفرع ومكان السكن</h2>
+      <div class="row2">
+        <div class="field">
+          <label>الفرع <span class="req">*</span></label>
+          <select id="branch" required>
+            <option value="">اختر الفرع...</option>
+            <option>المغني</option><option>الأنقر</option><option>البطنيجي</option>
+            <option>أبو عمرو</option><option>الشياح</option><option>محيسن</option>
+            <option>فرج</option><option>العكشية</option><option>الحاج سالم (داود)</option>
+            <option>أبو هين</option><option>قديح</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>مخيم الإقامة <span class="req">*</span></label>
+          <select id="camp" required>
+            <option value="">اختر المخيم...</option>
+            <option>المغني - السرايا</option>
+            <option>المغني - أصدقاء المريض (الصداقة)</option>
+            <option>المغني - مترو</option>
+            <option>مخيمات أخرى</option>
+          </select>
+        </div>
+      </div>
+      <div class="row2">
+        <div class="field">
+          <label>رقم الجوال <span class="req">*</span></label>
+          <input type="tel" id="phone1" required>
+        </div>
+        <div class="field">
+          <label>رقم جوال احتياطي</label>
+          <input type="tel" id="phone2">
+        </div>
+      </div>
+      <div class="field">
+        <label>عدد أفراد الأسرة (الأبناء) <span class="req">*</span></label>
+        <input type="number" id="childCount" min="0" max="20" value="0" oninput="renderChildren()">
+        <div class="hint" style="margin-top:6px;">ستظهر خانات تسجيل كل ابن تلقائيًا حسب العدد المُدخل</div>
+      </div>
+      <div id="childrenWrap"></div>
+    </div>
+
+    <!-- الحمل والرضاعة -->
+    <div class="card">
+      <h2>الحمل والرضاعة</h2>
+      <div class="field">
+        <label>هل يوجد حوامل أو مرضعات؟</label>
+        <div class="choice-group" data-target="pregnant">
+          <button type="button" class="choice-btn" onclick="pickChoice(this,'pregnant',true)">نعم</button>
+          <button type="button" class="choice-btn picked" onclick="pickChoice(this,'pregnant',false)">لا</button>
+        </div>
+      </div>
+      <div class="sub-panel" id="pregnantPanel">
+        <div class="field">
+          <label>عدد الأطفال الرضّع</label>
+          <input type="number" id="infantCount" min="1" max="10" oninput="renderInfants()">
+        </div>
+        <div id="infantsWrap"></div>
+      </div>
+    </div>
+
+    <!-- الأمراض المزمنة -->
+    <div class="card">
+      <h2>الأمراض المزمنة</h2>
+      <div class="field">
+        <label>هل يوجد أمراض مزمنة ضمن أفراد العائلة؟</label>
+        <div class="choice-group" data-target="chronic">
+          <button type="button" class="choice-btn" onclick="pickChoice(this,'chronic',true)">نعم</button>
+          <button type="button" class="choice-btn picked" onclick="pickChoice(this,'chronic',false)">لا</button>
+        </div>
+      </div>
+      <div class="sub-panel" id="chronicPanel">
+        <div class="field">
+          <label>نوع المرض المزمن</label>
+          <div class="checkbox-list">
+            <label><input type="checkbox" name="chronicType" value="ضغط"> ضغط</label>
+            <label><input type="checkbox" name="chronicType" value="سكري"> سكري</label>
+            <label><input type="checkbox" name="chronicType" value="قلب"> قلب</label>
+            <label><input type="checkbox" name="chronicType" value="ربو"> ربو</label>
+            <label><input type="checkbox" name="chronicType" value="فشل كلوي"> فشل كلوي</label>
+            <label><input type="checkbox" name="chronicType" value="أخرى"> أخرى</label>
+          </div>
+        </div>
+        <div class="field">
+          <label>الأشخاص المصابون</label>
+          <div class="checkbox-list" id="chronicPersons"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- الإصابات -->
+    <div class="card">
+      <h2>الإصابات</h2>
+      <div class="field">
+        <label>هل يوجد مصابون ضمن أفراد العائلة؟</label>
+        <div class="choice-group" data-target="injured">
+          <button type="button" class="choice-btn" onclick="pickChoice(this,'injured',true)">نعم</button>
+          <button type="button" class="choice-btn picked" onclick="pickChoice(this,'injured',false)">لا</button>
+        </div>
+      </div>
+      <div class="sub-panel" id="injuredPanel">
+        <div class="field">
+          <label>الأشخاص المصابون</label>
+          <div class="checkbox-list" id="injuredPersons"></div>
+        </div>
+        <div class="field">
+          <label>وصف الإصابة</label>
+          <textarea id="injuryDesc" rows="3"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- الإعاقات -->
+    <div class="card">
+      <h2>الإعاقات</h2>
+      <div class="field">
+        <label>هل يوجد ضمن أفراد الأسرة إعاقات؟</label>
+        <div class="choice-group" data-target="disability">
+          <button type="button" class="choice-btn" onclick="pickChoice(this,'disability',true)">نعم</button>
+          <button type="button" class="choice-btn picked" onclick="pickChoice(this,'disability',false)">لا</button>
+        </div>
+      </div>
+      <div class="sub-panel" id="disabilityPanel">
+        <div class="row2">
+          <div class="field"><label>إعاقة بصرية — العدد</label><input type="number" min="0" id="dis_visual"></div>
+          <div class="field"><label>إعاقة حركية — العدد</label><input type="number" min="0" id="dis_motor"></div>
+          <div class="field"><label>إعاقة ذهنية — العدد</label><input type="number" min="0" id="dis_mental"></div>
+          <div class="field"><label>إعاقة سمعية — العدد</label><input type="number" min="0" id="dis_hearing"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- الشهداء -->
+    <div class="card">
+      <h2>الشهداء</h2>
+      <div class="field">
+        <label>هل يوجد شهداء ضمن العائلة؟</label>
+        <div class="choice-group" data-target="martyrs">
+          <button type="button" class="choice-btn" onclick="pickChoice(this,'martyrs',true)">نعم</button>
+          <button type="button" class="choice-btn picked" onclick="pickChoice(this,'martyrs',false)">لا</button>
+        </div>
+      </div>
+      <div class="sub-panel" id="martyrsPanel">
+        <div class="field">
+          <label>عدد الشهداء</label>
+          <input type="number" id="martyrCount" min="1" max="20" oninput="renderMartyrs()">
+        </div>
+        <div id="martyrsWrap"></div>
+      </div>
+    </div>
+
+    <!-- كلمة السر -->
+    <div class="card">
+      <h2>إنشاء كلمة السر</h2>
+      <p class="hint">استخدم هذه الكلمة لاحقًا لتسجيل الدخول وتحديث بياناتك من صفحة «تحديث بياناتي»</p>
+      <div class="row2">
+        <div class="field">
+          <label>كلمة السر (4 أرقام) <span class="req">*</span></label>
+          <input type="password" id="regPassword" inputmode="numeric" maxlength="4" pattern="\d{4}" required>
+          <div class="error-text" id="err-regPassword">كلمة السر يجب أن تتكون من 4 أرقام بالضبط</div>
+        </div>
+        <div class="field">
+          <label>تأكيد كلمة السر <span class="req">*</span></label>
+          <input type="password" id="regPassword2" inputmode="numeric" maxlength="4" pattern="\d{4}" required>
+          <div class="error-text" id="err-regPassword2">كلمتا السر غير متطابقتين</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- الإقرار -->
+    <div class="card">
+      <h2>الإقرار والتعهد</h2>
+      <div class="declare">
+        <input type="checkbox" id="declareBox" required>
+        <p id="declareText">أقر أنا <b>[الاسم]</b> صاحب الهوية رقم <b>[رقم الهوية]</b> بصحة جميع البيانات المسجلة أعلاه، وأتحمل كامل المسؤولية عنها.</p>
+      </div>
+    </div>
+
+    <button type="submit" class="submit-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px;vertical-align:-4px;margin-left:6px;"><path d="M20 6 9 17l-5-5"/></svg>
+      إرسال البيانات والتسجيل
+    </button>
+  </form>
+</section>
+
+<div class="toast" id="toast"></div>
+
+<footer>© عائلة المغني — معًا نصمد، معًا ننتصر</footer>
+
+<script>
+/* ---------------- navigation ---------------- */
+const burgerBtn=document.getElementById('burgerBtn');
+const sidemenu=document.getElementById('sidemenu');
+const overlay=document.getElementById('overlay');
+burgerBtn.addEventListener('click',()=>{sidemenu.classList.add('open');overlay.classList.add('show');});
+overlay.addEventListener('click',()=>{sidemenu.classList.remove('open');overlay.classList.remove('show');});
+
+function goPage(name){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  sidemenu.classList.remove('open');overlay.classList.remove('show');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ---------------- toast ---------------- */
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3200);
+}
+
+/* ---------------- social status -> spouse fields ---------------- */
+function onSocialChange(){
+  const val=document.getElementById('socialStatus').value;
+  document.getElementById('spousePanel').classList.toggle('show', val==='married');
+  refreshPersonLists();
+}
+
+/* ---------------- generic yes/no toggles ---------------- */
+function pickChoice(btn,target,val){
+  document.querySelectorAll(`.choice-group[data-target="${target}"] .choice-btn`).forEach(b=>b.classList.remove('picked'));
+  btn.classList.add('picked');
+  const panelMap={pregnant:'pregnantPanel',chronic:'chronicPanel',injured:'injuredPanel',disability:'disabilityPanel',martyrs:'martyrsPanel'};
+  document.getElementById(panelMap[target]).classList.toggle('show', val===true);
+  if(val===true && (target==='chronic'||target==='injured')) refreshPersonLists();
+}
+
+/* ---------------- children dynamic fields ---------------- */
+function renderChildren(){
+  const n=parseInt(document.getElementById('childCount').value)||0;
+  const wrap=document.getElementById('childrenWrap');
+  wrap.innerHTML='';
+  for(let i=1;i<=n;i++){
+    wrap.insertAdjacentHTML('beforeend',`
+      <div class="person-block">
+        <h4>الابن رقم ${i}</h4>
+        <div class="field"><label>الاسم (رباعي)</label><input type="text" class="childName" data-i="${i}" onchange="refreshPersonLists()"></div>
+        <div class="row2">
+          <div class="field"><label>رقم الهوية</label><input type="text" class="childId" inputmode="numeric" maxlength="9"></div>
+          <div class="field"><label>تاريخ الميلاد</label><input type="date" class="childDob"></div>
+        </div>
+        <div class="field">
+          <label>هل هو من ذوي الاحتياجات الخاصة؟</label>
+          <select class="childSpecial"><option value="no">لا</option><option value="yes">نعم</option></select>
+        </div>
+      </div>`);
+  }
+  refreshPersonLists();
+}
+
+/* ---------------- infants dynamic fields ---------------- */
+function renderInfants(){
+  const n=parseInt(document.getElementById('infantCount').value)||0;
+  const wrap=document.getElementById('infantsWrap');
+  wrap.innerHTML='';
+  for(let i=1;i<=n;i++){
+    wrap.insertAdjacentHTML('beforeend',`
+      <div class="person-block">
+        <h4>الرضيع رقم ${i}</h4>
+        <div class="field"><label>الاسم (رباعي)</label><input type="text" class="infantName"></div>
+        <div class="row2">
+          <div class="field"><label>رقم الهوية</label><input type="text" class="infantId" inputmode="numeric" maxlength="9"></div>
+          <div class="field"><label>تاريخ الميلاد</label><input type="date" class="infantDob"></div>
+        </div>
+      </div>`);
+  }
+}
+
+/* ---------------- martyrs dynamic fields ---------------- */
+function renderMartyrs(){
+  const n=parseInt(document.getElementById('martyrCount').value)||0;
+  const wrap=document.getElementById('martyrsWrap');
+  wrap.innerHTML='';
+  for(let i=1;i<=n;i++){
+    wrap.insertAdjacentHTML('beforeend',`
+      <div class="person-block">
+        <h4>الشهيد رقم ${i}</h4>
+        <div class="field"><label>اسم الشهيد (رباعي)</label><input type="text" class="martyrName"></div>
+        <div class="field">
+          <label>صلة القرابة بالنسبة لمقدّم التسجيل</label>
+          <select class="martyrRelation">
+            <option value="">اختر الصلة...</option>
+            <option value="ابن">ابن</option>
+            <option value="ابنة">ابنة</option>
+            <option value="زوج">زوج</option>
+            <option value="زوجة">زوجة</option>
+          </select>
+        </div>
+      </div>`);
+  }
+}
+
+/* ---------------- build the "affected persons" checkbox lists ---------------- */
+function refreshPersonLists(){
+  const names=[];
+  const headName=document.getElementById('headName').value.trim();
+  if(headName) names.push(headName);
+  if(document.getElementById('socialStatus').value==='married'){
+    const sp=document.getElementById('spouseName').value.trim();
+    if(sp) names.push(sp);
+  }
+  document.querySelectorAll('.childName').forEach(inp=>{
+    if(inp.value.trim()) names.push(inp.value.trim());
+  });
+  ['chronicPersons','injuredPersons'].forEach(id=>{
+    const box=document.getElementById(id);
+    if(!box) return;
+    box.innerHTML = names.length
+      ? names.map(n=>`<label><input type="checkbox" value="${n}"> ${n}</label>`).join('')
+      : '<span style="font-family:Cairo,sans-serif;font-size:.85rem;color:#8a8265;">أدخل الأسماء أعلاه أولًا لتظهر هنا</span>';
+  });
+}
+document.getElementById('headName').addEventListener('input',refreshPersonLists);
+document.getElementById('spouseName').addEventListener('input',refreshPersonLists);
+
+/* ---------------- declaration text auto-fill ---------------- */
+function updateDeclare(){
+  const name=document.getElementById('headName').value.trim()||'[الاسم]';
+  const id=document.getElementById('headId').value.trim()||'[رقم الهوية]';
+  document.getElementById('declareText').innerHTML=`أقر أنا <b>${name}</b> صاحب الهوية رقم <b>${id}</b> بصحة جميع البيانات المسجلة أعلاه، وأتحمل كامل المسؤولية عنها.`;
+}
+document.getElementById('headName').addEventListener('input',updateDeclare);
+document.getElementById('headId').addEventListener('input',updateDeclare);
+
+/* ---------------- national ID validation ---------------- */
+document.getElementById('headId').addEventListener('input',function(){
+  this.value=this.value.replace(/\D/g,'').slice(0,9);
+  document.getElementById('err-headId').style.display = (this.value.length>0 && this.value.length<9) ? 'block':'none';
+  const dup = this.value.length===9 && !!getFamilies()[this.value];
+  document.getElementById('err-headIdDup').style.display = dup ? 'block':'none';
+});
+
+/* ---------------- storage helpers ---------------- */
+function getFamilies(){
+  try{ return JSON.parse(localStorage.getItem('magniFamilies')||'{}'); }
+  catch(e){ return {}; }
+}
+function saveFamilies(obj){
+  localStorage.setItem('magniFamilies', JSON.stringify(obj));
+}
+
+/* ---------------- submit ---------------- */
+function submitForm(e){
+  e.preventDefault();
+  const headId=document.getElementById('headId').value;
+  if(headId.length!==9){
+    document.getElementById('err-headId').style.display='block';
+    showToast('يرجى إدخال رقم هوية صحيح مكون من 9 أرقام');
+    return false;
+  }
+  const families=getFamilies();
+  if(families[headId]){
+    document.getElementById('err-headIdDup').style.display='block';
+    showToast('رقم الهوية هذا مسجل مسبقًا، الرجاء استخدام «تحديث بياناتي»');
+    return false;
+  }
+  const pass1=document.getElementById('regPassword').value;
+  const pass2=document.getElementById('regPassword2').value;
+  if(!/^\d{4}$/.test(pass1)){
+    document.getElementById('err-regPassword').style.display='block';
+    showToast('كلمة السر يجب أن تتكون من 4 أرقام');
+    return false;
+  }
+  document.getElementById('err-regPassword').style.display='none';
+  if(pass1!==pass2){
+    document.getElementById('err-regPassword2').style.display='block';
+    showToast('كلمتا السر غير متطابقتين');
+    return false;
+  }
+  document.getElementById('err-regPassword2').style.display='none';
+  if(!document.getElementById('declareBox').checked){
+    showToast('يجب الموافقة على الإقرار والتعهد قبل الإرسال');
+    return false;
+  }
+
+  const children=[];
+  document.querySelectorAll('#childrenWrap .person-block').forEach(block=>{
+    children.push({
+      name: block.querySelector('.childName')?.value.trim()||'',
+      id: block.querySelector('.childId')?.value.trim()||'',
+      dob: block.querySelector('.childDob')?.value||''
+    });
+  });
+
+  // تجميع البيانات (سيتم لاحقًا إرسالها إلى لوحتي المندوب والمسؤول)
+  const data={
+    headName:document.getElementById('headName').value,
+    headId,
+    headDob:document.getElementById('headDob').value,
+    socialStatus:document.getElementById('socialStatus').value,
+    spouseName:document.getElementById('spouseName')?.value||'',
+    spouseId:document.getElementById('spouseId')?.value||'',
+    branch:document.getElementById('branch').value,
+    camp:document.getElementById('camp').value,
+    phone1:document.getElementById('phone1').value,
+    phone2:document.getElementById('phone2').value,
+    children,
+    password: pass1,
+  };
+  console.log('بيانات التسجيل:',data);
+  families[headId]=data;
+  saveFamilies(families);
+  showToast('تم إرسال بياناتك بنجاح، سيتم التواصل معك من قِبل المندوب المختص');
+  setTimeout(()=>goPage('home'),1800);
+  return false;
+}
+
+/* ---------------- login ---------------- */
+function doLogin(){
+  const id=document.getElementById('loginId').value.trim();
+  const pass=document.getElementById('loginPassword').value.trim();
+  const families=getFamilies();
+  const rec=families[id];
+  if(!rec){ showToast('رقم الهوية غير مسجل لدينا'); return; }
+  if(rec.password!==pass){ showToast('كلمة السر غير صحيحة'); return; }
+  showToast('تم تسجيل الدخول بنجاح، سيتم فتح صفحة تعديل بياناتك قريبًا');
+}
+
+/* ---------------- forgot password: build security questions ---------------- */
+function buildSecurityQuestions(rec){
+  const pool=[];
+  if(rec.socialStatus==='married' && rec.spouseName){
+    if(rec.spouseId) pool.push({label:`ما هو رقم هوية الزوجة (${rec.spouseName})؟`, answer:rec.spouseId});
+  }
+  (rec.children||[]).forEach(c=>{
+    if(!c.name) return;
+    if(c.id) pool.push({label:`ما هو رقم هوية الابن/الابنة (${c.name})؟`, answer:c.id});
+    if(c.dob) pool.push({label:`ما هو تاريخ ميلاد الابن/الابنة (${c.name})؟`, answer:c.dob});
+  });
+  return pool;
+}
+let currentRecoveryId=null;
+let currentRecoveryQs=[];
+function startPasswordRecovery(){
+  const id=document.getElementById('loginId').value.trim();
+  if(id.length!==9){ showToast('الرجاء إدخال رقم الهوية أولًا'); return; }
+  const rec=getFamilies()[id];
+  if(!rec){ showToast('رقم الهوية غير مسجل لدينا'); return; }
+  const pool=buildSecurityQuestions(rec);
+  if(pool.length<2){
+    showToast('لا تتوفر بيانات كافية لاسترجاع كلمة السر، الرجاء التواصل مع المندوب');
+    return;
+  }
+  // اختيار سؤالين عشوائيين مختلفين
+  const shuffled=pool.sort(()=>Math.random()-0.5);
+  currentRecoveryQs=shuffled.slice(0,2);
+  currentRecoveryId=id;
+  document.getElementById('rqLabel1').textContent=currentRecoveryQs[0].label;
+  document.getElementById('rqLabel2').textContent=currentRecoveryQs[1].label;
+  document.getElementById('rqAnswer1').value='';
+  document.getElementById('rqAnswer2').value='';
+  document.getElementById('recoveryBox').style.display='block';
+  document.getElementById('recoveredBox').style.display='none';
+}
+function verifyRecovery(){
+  const a1=document.getElementById('rqAnswer1').value.trim();
+  const a2=document.getElementById('rqAnswer2').value.trim();
+  const ok1=a1 && a1===currentRecoveryQs[0].answer.trim();
+  const ok2=a2 && a2===currentRecoveryQs[1].answer.trim();
+  if(!ok1 || !ok2){
+    showToast('إجابات غير صحيحة، حاول مرة أخرى');
+    return;
+  }
+  const rec=getFamilies()[currentRecoveryId];
+  document.getElementById('recoveryBox').style.display='none';
+  document.getElementById('oldPasswordShow').textContent=rec.password;
+  document.getElementById('newPasswordInput').value='';
+  document.getElementById('recoveredBox').style.display='block';
+  document.getElementById('loginId').value=currentRecoveryId;
+  showToast('تم التحقق من هويتك بنجاح');
+}
+function saveNewPassword(){
+  const newPass=document.getElementById('newPasswordInput').value.trim();
+  if(!/^\d{4}$/.test(newPass)){
+    showToast('كلمة السر الجديدة يجب أن تتكون من 4 أرقام');
+    return;
+  }
+  const families=getFamilies();
+  const rec=families[currentRecoveryId];
+  if(!rec){ showToast('حدث خطأ، الرجاء المحاولة مجددًا'); return; }
+  rec.password=newPass;
+  families[currentRecoveryId]=rec;
+  saveFamilies(families);
+  document.getElementById('oldPasswordShow').textContent=newPass;
+  showToast('تم حفظ كلمة السر الجديدة بنجاح');
+}
+
+renderChildren();
+</script>
+</body>
+</html>
